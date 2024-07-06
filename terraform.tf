@@ -23,18 +23,18 @@ terraform {
 #   subscription_id = "58d48d30-bf14-416f-92ed-254430cc6772"
 # }
 
-provider "azurerm" {
-  features {}
-}
+# provider "azurerm" {
+#   features {}
+# }
 
-provider "azuread" {
-  # Configure the azuread provider...
-}
+# provider "azuread" {
+#   # Configure the azuread provider...
+# }
 
-provider "random" {
-  # Configure the random provider...
-}
+# provider "random" {
+#   # Configure the random provider...
+# }
 
-provider "time" {
-  # Configure the time_rotating provider...
-}
+# provider "time" {
+#   # Configure the time_rotating provider...
+# }
