@@ -1,5 +1,7 @@
 ## Usage
 
+## Usage
+
 ```terraform
 
 locals {
@@ -70,10 +72,14 @@ vnet.json:
     }
 }
 ```
+Output Examples:
 
-
-
-
+```terraform
+output "resource-groups" {
+  description = "shows All resource groups created in the subscription"
+  value       = module.resource-group.resource_groups
+}
+```
 
 ## Requirements
 
@@ -106,4 +112,6 @@ No resources.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_resource-groups"></a> [resource-groups](#output\_resource-groups) | shows All resource groups created in the subscription |
