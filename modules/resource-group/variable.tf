@@ -4,5 +4,4 @@ variable "resource_groups" {
     rg_location = string
     rg_tags     = map(string)
   }))
-  default = {}
 }
