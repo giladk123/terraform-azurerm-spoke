@@ -12,3 +12,15 @@ module "vnet" {
 
   depends_on = [module.resource-group]
 }
+
+module "keyvault" {
+  source = "./modules/keyvault"
+
+  keyvaults = var.keyvaults
+
+  depends_on = [module.resource_group]
+
+  providers = {
+    azurerm = azurerm.subscription1
+  }
+}

@@ -4,9 +4,13 @@ variable "resource_groups" {
     rg_location = string
     rg_tags     = map(string)
   }))
-  default = {}
 }
 
 variable "vnets" {
    type = map(any)
+}
+
+variable "keyvaults" {
+  description = "The keyvaults to create"
+  type        = map(any)
 }

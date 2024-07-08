@@ -1,27 +1,27 @@
 ## Usage
 
-## Usage
-
 ```terraform
 
 locals {
   resource_group          = jsondecode(file("./ccoe/rg.json"))
   vnet_settings           = jsondecode(file("./network/vnet.json"))
+  keyvault_settings       = jsondecode(file("./ccoe/keyvault.json"))
 }
 
 module "spoke" {
   source  = "app.terraform.io/hcta-azure-dev/spoke/azurerm"
-  version = "1.0.4"
+  version = "1.0.11"
  
   resource_groups = local.resource_group.resource_groups
   vnets = local.vnet_settings.vnets
+  keyvaults = local.keyvault_settings.keyvaults
   providers = {
     azurerm = azurerm.subscription1
   }
 }
 ```
 
-JSON Examples
+Jsons Examples:
 
 rg.json:
 
@@ -72,14 +72,54 @@ vnet.json:
     }
 }
 ```
-Output Examples:
+
+keyvault.json:
+
+```json
+{
+    "keyvaults": {
+        "we-ydev-azus-opdx-01-kv": {
+            "location": "West Europe",
+            "resource_group_name": "we-ydev-azus-opdx-arutzim-rg",
+            "tenant_id": "233c7c56-1c47-4b81-a976-39ea1da0802a",
+            "soft_delete_retention_days": 18,
+            "purge_protection_enabled": true,
+            "sku_name": "standard",
+            "public_network_access_enabled": false
+        },
+        "we-ydev-azus-opdx-02-kv": {
+            "location": "West Europe",
+            "resource_group_name": "we-ydev-azus-opdx-arutzim-rg",
+            "tenant_id": "233c7c56-1c47-4b81-a976-39ea1da0802a",
+            "soft_delete_retention_days": 10,
+            "purge_protection_enabled": true,
+            "sku_name": "standard",
+            "public_network_access_enabled": false
+        }
+    }
+}
+```
+
+Outputs Examples:
 
 ```terraform
 output "resource-groups" {
-  description = "shows All resource groups created in the subscription"
-  value       = module.resource-group.resource_groups
+  value = module.spoke.resource-groups
+  description = "value of resource-groups"
+}
+
+output "vnets" {
+  value = module.spoke.vnets
+  description = "value of vnets"
+}
+
+output "keyvaults" {
+  description = "All keyvaults created in the subscription"
+  value       = { for k, v in module.keyvault.keyvault : k => v }
 }
 ```
+
+
 
 ## Requirements
 
@@ -98,6 +138,7 @@ No providers.
 |------|--------|---------|
 | <a name="module_resource-group"></a> [resource-group](#module\_resource-group) | ./modules/resource-group | n/a |
 | <a name="module_vnet"></a> [vnet](#module\_vnet) | ./modules/vnet | n/a |
+| <a name="module_keyvault"></a> [keyvault](#module\_keyvault) | ./modules/keyvault | n/a |
 
 ## Resources
 
@@ -107,7 +148,8 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_resource_groups"></a> [resource\_groups](#input\_resource\_groups) | Map of resource group details | <pre>map(object({<br>    rg_location = string<br>    rg_tags     = map(string)<br>  }))</pre> | `{}` | no |
+| <a name="input_keyvaults"></a> [keyvaults](#input\_keyvaults) | The keyvaults to create | `map(any)` | n/a | yes |
+| <a name="input_resource_groups"></a> [resource\_groups](#input\_resource\_groups) | Map of resource group details | <pre>map(object({<br>    rg_location = string<br>    rg_tags     = map(string)<br>  }))</pre> | n/a | yes |
 | <a name="input_vnets"></a> [vnets](#input\_vnets) | n/a | `map(any)` | n/a | yes |
 
 ## Outputs
@@ -115,3 +157,4 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_resource-groups"></a> [resource-groups](#output\_resource-groups) | shows All resource groups created in the subscription |
+| <a name="output_vnets"></a> [vnets](#output\_vnets) | shows All vnets created in the subscription |
