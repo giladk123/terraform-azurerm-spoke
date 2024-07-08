@@ -18,6 +18,6 @@ module "keyvault" {
 
   keyvaults = var.keyvaults
 
-  depends_on = [module.resource_group]
+  depends_on = [module.resource-group]
 
 }
