@@ -20,7 +20,4 @@ module "keyvault" {
 
   depends_on = [module.resource_group]
 
-  providers = {
-    azurerm = azurerm.subscription1
-  }
 }
