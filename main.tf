@@ -21,3 +21,11 @@ module "keyvault" {
   depends_on = [module.resource-group]
 
 }
+
+module "private-dns-zone" {
+  source = "./modules/private-dns-zone"
+
+  zones = var.zones
+  resource_group_name = var.resource_group_name
+  
+}

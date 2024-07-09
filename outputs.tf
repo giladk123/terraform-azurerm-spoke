@@ -12,3 +12,8 @@ output "keyvaults" {
   description = "All keyvaults created in the subscription"
   value       = { for k, v in module.keyvault.keyvault : k => v }
 }
+
+output "dns_zones" {
+  description = "All DNS zones created in the subscription"
+  value       = module.private-dns-zone.dns_zone_ids
+}
