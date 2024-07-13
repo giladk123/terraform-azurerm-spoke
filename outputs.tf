@@ -8,6 +8,12 @@ output "vnets" {
   value       = module.vnet.vnet
 }
 
+output "subnets" {
+  description = "shows All subnets created in the subscription"
+  value       = module.vnet.subnet
+  
+}
+
 output "keyvaults" {
   description = "All keyvaults created in the subscription"
   value       = { for k, v in module.keyvault.keyvault : k => v }
